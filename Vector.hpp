@@ -2,19 +2,16 @@
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
 #include <iostream>
+#include "./Iterator.hpp"
 
 
 namespace Ft  {
-
-
-
 template <class  T, typename Alloc = std::allocator<T> > 
-class vector{
+class vector {
 
 
 	public:
 		typedef T												value_type;
-
 		typedef Alloc											allocator_type;
 		typedef typename allocator_type::reference				reference;
 		typedef typename allocator_type::const_reference		const_reference;
@@ -22,39 +19,57 @@ class vector{
 		typedef typename allocator_type::const_pointer			const_pointer;
 		typedef typename allocator_type::size_type				size_type;
 		typedef typename allocator_type::difference_type		difference_type;
-
-		vector(unsigned long n);
+		// iterator  traits
+		typedef Ft::iterator<Ft::random_access_iterator_tag, value_type > iterator;
+		typedef Ft::iterator<Ft::random_access_iterator_tag, value_type > const_iterator;
 		vector(const vector &other);
-		~vector()
+	size_t 	capacity(void){return(this->_capacity);}
+		void clear()
 	{
-		_alloc.deallocate(_start, _end - _start); 
+		while(this->_start !=  this->_end )
+		{
+			this->_alloc.destroy(--this->_end);
+		}
+	}
 
-		
-	};
 		vector &operator=(const vector &other);
-		unsigned long size() const;
-		unsigned long capacity() const;
+		size_t  size() const;
+		size_t  capacity() const;
 		bool empty() const;
+		
 	//allocator_type mean  come from Alloc  Typdef
 	explicit  vector (const allocator_type &allocator = allocator_type()): _size(0),_capacity(0),_data(nullptr),_alloc(allocator){} 
-
-
+	explicit vector(size_t n ,const value_type& val =  value_type(), const allocator_type &allocator = allocator_type()):_size (n),_capacity(n),_data(nullptr),_alloc(allocator)
+	{
+		_start  = _alloc.allocate(_capacity);
+		_data = _start;
+		_end = _start;
+		for (size_t i = 0; i < _size; i++)
+		{
+			_alloc.construct(_end++, val);
+		}
+	} 
+	~vector()
+	{
+		this->clear();
+		 //  should thi be with end   otherway?
+		this->_alloc.deallocate(this->_start,this->capacity());
+	}
 	private:
-		unsigned long _size;
-		unsigned long _capacity;
-		T *_data;
+		size_t  _size;
+		size_t  _capacity;
+		value_type  *_data;
 		pointer   _start;
 		pointer   _end;
 		Alloc _alloc;
-		void push_back(const T &value);
-		void reserve (unsigned long n);
+		void push_back(const value_type  &value);
+		void reserve (size_t  n);
 	protected:
 	
 	 
 	
-
+  
 };
-
 
 
 
