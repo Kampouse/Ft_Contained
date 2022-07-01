@@ -14,7 +14,8 @@ int print_vector(std::vector<int>vec)
 
 int main(void)
 {
-	Ft::vector<int> simple = 	 Ft::vector<int>();
-	
+	//Ft::vector<int> simple = 	 Ft::vector<int>();
+	Ft::vector<int> simpleB(10);
+	std::vector<int> simpleC(10);
 
 }
