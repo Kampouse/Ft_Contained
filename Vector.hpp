@@ -20,10 +20,11 @@ class vector {
 		typedef typename allocator_type::size_type				size_type;
 		typedef typename allocator_type::difference_type		difference_type;
 		// iterator  traits
-		typedef Ft::iterator<Ft::random_access_iterator_tag, value_type > iterator;
-		typedef Ft::iterator<Ft::random_access_iterator_tag, value_type > const_iterator;
+		typedef Ft::random_iterator<Ft::random_access_iterator_tag, value_type > iterator;
+		typedef Ft::random_iterator<Ft::random_access_iterator_tag, value_type > const_iterator;
 		vector(const vector &other);
 	size_t 	capacity(void){return(this->_capacity);}
+		iterator begin() {return iterator(this->_start);}
 		void clear()
 	{
 		while(this->_start !=  this->_end )
@@ -31,14 +32,14 @@ class vector {
 			this->_alloc.destroy(--this->_end);
 		}
 	}
-
 		vector &operator=(const vector &other);
 		size_t  size() const;
 		size_t  capacity() const;
 		bool empty() const;
 		
 	//allocator_type mean  come from Alloc  Typdef
-	explicit  vector (const allocator_type &allocator = allocator_type()): _size(0),_capacity(0),_data(NULL),_alloc(allocator){} 
+	explicit  vector (const allocator_type &allocator = allocator_type()): _size(0),_capacity(0),_data(NULL)
+	,_start(NULL),_end(NULL), _alloc(allocator){} 
 	explicit vector(size_t n ,const value_type& val =  value_type(), const allocator_type &allocator = allocator_type()):_size (n),_capacity(n),_data(NULL),_alloc(allocator)
 	{
 		_start  = _alloc.allocate(_capacity);

@@ -28,17 +28,20 @@ template <class T> class iterator_traits<const T *> {};
 
 // iterator class
 template <class Category, class T, class Distance = ptrdiff_t, class Pointer = T *, class Reference = T &>
-class iterator {
+class random_iterator {
+public:
   typedef T value_type;
   typedef Distance difference_type;
   typedef Pointer pointer;
   typedef Reference reference;
   typedef Category iterator_category;
   pointer _ptr;
+  random_iterator() : _ptr(NULL) {}
+  random_iterator(pointer ptr) : _ptr(ptr) {}
   //iterator(const iterator &other) { return other; }
   //iterator( iterator &other){return other;}
   //iterator &operator=(const iterator &other) { (void)other ;return *this;  }
-  //reference operator*() { return *_ptr; }
+  reference operator*() { return *_ptr; }
 };
 
 }; // namespace Ft
