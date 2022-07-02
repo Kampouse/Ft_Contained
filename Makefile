@@ -1,7 +1,7 @@
-NAME = easyfind 
+NAME = container 
 
 FLAGS = -Wall -Wextra -Werror --std=c++98 -g
-SRCS = main.cpp
+SRCS = main.cpp 
 RM =  rm -rf 
 .cpp.o:
 	@c++ ${FLAGS}  -c $< -o ${<:.cpp=.o}
@@ -21,7 +21,7 @@ val: all
 clean:
 	    ${RM} ${OBJS}	
 git:
-		@git add ${SRCS} Makefile
+		@git add ${SRCS} Makefile Vector.hpp Iterator.hpp
 
 fclean: clean
 	@${RM} ${NAME}

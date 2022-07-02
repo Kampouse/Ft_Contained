@@ -2,8 +2,8 @@
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
 #include <iostream>
+#include <cstddef>
 #include "./Iterator.hpp"
-
 
 namespace Ft  {
 template <class  T, typename Alloc = std::allocator<T> > 
@@ -38,8 +38,8 @@ class vector {
 		bool empty() const;
 		
 	//allocator_type mean  come from Alloc  Typdef
-	explicit  vector (const allocator_type &allocator = allocator_type()): _size(0),_capacity(0),_data(nullptr),_alloc(allocator){} 
-	explicit vector(size_t n ,const value_type& val =  value_type(), const allocator_type &allocator = allocator_type()):_size (n),_capacity(n),_data(nullptr),_alloc(allocator)
+	explicit  vector (const allocator_type &allocator = allocator_type()): _size(0),_capacity(0),_data(NULL),_alloc(allocator){} 
+	explicit vector(size_t n ,const value_type& val =  value_type(), const allocator_type &allocator = allocator_type()):_size (n),_capacity(n),_data(NULL),_alloc(allocator)
 	{
 		_start  = _alloc.allocate(_capacity);
 		_data = _start;

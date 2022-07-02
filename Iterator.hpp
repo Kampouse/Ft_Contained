@@ -35,10 +35,10 @@ class iterator {
   typedef Reference reference;
   typedef Category iterator_category;
   pointer _ptr;
-  iterator(const iterator &other) { return other; }
-  iterator( iterator &other){return other;}
-  iterator &operator=(const iterator &other) { (void)other ;return *this;  }
-  reference operator*() { return *_ptr; }
+  //iterator(const iterator &other) { return other; }
+  //iterator( iterator &other){return other;}
+  //iterator &operator=(const iterator &other) { (void)other ;return *this;  }
+  //reference operator*() { return *_ptr; }
 };
 
 }; // namespace Ft
