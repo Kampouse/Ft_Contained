@@ -42,7 +42,23 @@ public:
   //iterator( iterator &other){return other;}
   //iterator &operator=(const iterator &other) { (void)other ;return *this;  }
   reference operator*() { return *_ptr; }
+  pointer operator->() { return _ptr; }
+  random_iterator &operator++() { ++_ptr; return *this; }
+  random_iterator operator++(int) { random_iterator tmp = *this; ++_ptr; return tmp; }
+  random_iterator &operator--() { --_ptr; return *this; }
+  random_iterator operator--(int) { random_iterator tmp = *this; --_ptr; return tmp; }
+  random_iterator operator+(Distance n) { return random_iterator(_ptr + n); }
+  random_iterator operator-(Distance n) { return random_iterator(_ptr - n); }
+  random_iterator &operator+=(Distance n) { _ptr += n; return *this; }
+  random_iterator &operator-=(Distance n) { _ptr -= n; return *this; }
+  bool operator==(const random_iterator &other) { return _ptr == other._ptr; }
+  bool operator!=(const random_iterator &other) { return _ptr != other._ptr; }
+  bool operator<(const random_iterator &other) { return _ptr < other._ptr; }
+  bool operator>(const random_iterator &other) { return _ptr > other._ptr; }
+  bool operator<=(const random_iterator &other) { return _ptr <= other._ptr; }
+  bool operator>=(const random_iterator &other) { return _ptr >= other._ptr; }
 };
+
 
 }; // namespace Ft
 #endif
