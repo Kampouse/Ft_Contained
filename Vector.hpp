@@ -36,7 +36,6 @@ public:
   size_type size() const { return this->_end - this->_start; }
   size_type max_size() const { return this->_alloc.max_size(); }
 iterator insert(iterator position, const value_type &val) 
-
 {
 	(void)val;
 
@@ -46,20 +45,9 @@ iterator insert(iterator position, const value_type &val)
 			for (size_type i = _end - _start - 1; i >= pos; i--)
 			{
 						_alloc.construct(_end + 1, _start[i]);
-
-
-
 			}
 			this->_alloc.construct(_end, *position);
 		}
-		
-
-
-
-
-
-
-
 }
 
   void resize(size_t n , size_type val = value_type())
@@ -122,6 +110,7 @@ iterator insert(iterator position, const value_type &val)
 	{
 		int next_capacity = (this->size() > 0) ? (int)(this->size() * 2) : 1;
 		this->reserve(next_capacity);
+		_capacity = next_capacity;
 	}
 	_alloc.construct(_end, value);
 	_end++;

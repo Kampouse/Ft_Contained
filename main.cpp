@@ -1,25 +1,20 @@
 #include <iostream> 
 #include <vector> 
 #include "./Vector.hpp"
-#define  HEADER Ft
+#include "Test.hpp"
 
 int main(void)
 {
-
-	HEADER::vector<int> vec;
-
-	vec.push_back(1);
-	vec.push_back(2);
-	vec.push_back(2);
-	vec.push_back(2);
-	vec.push_back(2);
-	vec.push_back(2);
-	vec.push_back(2);
-	vec.push_back(2);
-	vec.print_vector();
-	std::cout << vec.size();
-
-}
+ Test<int>test;
+ test.push_back(1);
+ test.push_back(1);
+ test.push_back(1);
+ test.push_back(1);
+ test.push_back(1);
+ test.push_back(1);
+ test.push_back(1);
+ test.push_back(1);
+ test.push_back(1);
 /*
 int main(void)
 {
@@ -61,3 +56,4 @@ int main(void)
 */
 
 
+}
