@@ -25,17 +25,21 @@ class vector {
 		vector(const vector &other);
 	size_t 	capacity(void){return(this->_capacity);}
 		iterator begin() {return iterator(this->_start);}
+		//should ths return the end of capacity
+		iterator end() {return iterator(this->_end);}
 		void clear()
 	{
 		while(this->_start !=  this->_end_capacity )
 			this->_alloc.destroy(--this->_end_capacity);
 	}
 		vector &operator=(const vector &other);
-		size_t  size() const;
+		size_type size() const {return this->_end - this->start;} 
+		size_type max_size() const {return this->_alloc.max_size();} 
 		void resize(size_t n);
 		size_t  capacity() const;
 		bool empty() const;
-		
+
+
 	//allocator_type mean  come from Alloc  Typdef
 	explicit  vector (const allocator_type &allocator = allocator_type()): _size(0),_capacity(0),_data(NULL)
 	,_start(NULL),_end(NULL),_end_capacity(NULL), _alloc(allocator){} 
@@ -80,7 +84,7 @@ class vector {
 		{
 			if(n > this->max_size())
 				throw std::length_error("length error");
-			if(this->capacity >= n)
+			if(this->capacity() >= n)
 			return;
 			pointer prev_start = this->_start;
 			pointer prev_end = this->_end;
@@ -88,6 +92,11 @@ class vector {
 			this->_start = this->_alloc.allocate(n);
 			this->_end = this->_start;
 			this->_end_capacity = this->_start + n;
+			for (pointer i = prev_start; i != prev_end; i++)
+				this->_alloc.construct(this->_end++, *i);
+			for(size_type len = prev_end - prev_start; len > 0; len--)
+				this->_alloc.destroy(prev_start++);
+			this->_alloc.deallocate(prev_start, prev_size);
 		}
 
 	const_reference at(size_type n) const

@@ -15,8 +15,9 @@ int print_vector(std::vector<int>vec)
 int main(void)
 {
 	HEADER::vector<int> vec;
-
-
+	vec.reserve(10);
+	std::vector<int> vec2;
+	vec2.end();
 }
 /*
 int main(void)
