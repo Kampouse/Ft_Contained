@@ -27,8 +27,8 @@ class vector {
 		iterator begin() {return iterator(this->_start);}
 		void clear()
 	{
-		while(this->_start !=  this->_end )
-			this->_alloc.destroy(--this->_end);
+		while(this->_start !=  this->_end_capacity )
+			this->_alloc.destroy(--this->_end_capacity);
 	}
 		vector &operator=(const vector &other);
 		size_t  size() const;
@@ -38,16 +38,17 @@ class vector {
 		
 	//allocator_type mean  come from Alloc  Typdef
 	explicit  vector (const allocator_type &allocator = allocator_type()): _size(0),_capacity(0),_data(NULL)
-	,_start(NULL),_end(NULL), _alloc(allocator){} 
+	,_start(NULL),_end(NULL),_end_capacity(NULL), _alloc(allocator){} 
 	explicit vector(size_t n ,const value_type& val =  value_type(),
 	const allocator_type &allocator = allocator_type()):_size (n),_capacity(n),_data(NULL),_alloc(allocator)
 	{
 		_start  = _alloc.allocate(_capacity);
 		_data = _start;
+		_end_capacity = _start;
 		_end = _start;
 		for (size_t i = 0; i < _size; i++)
 		{
-			_alloc.construct(_end++, val);
+			_alloc.construct(_end_capacity++, val);
 		}
 	} 
 
@@ -69,8 +70,25 @@ class vector {
 		}
 		return *(_start + n);
 	}
-		void push_back(const value_type  &value);
-		void reserve (size_t  n);
+		void push_back(const value_type  &value)
+		{
+
+
+
+		}
+		void reserve (size_type  n)
+		{
+			if(n > this->max_size())
+				throw std::length_error("length error");
+			if(this->capacity >= n)
+			return;
+			pointer prev_start = this->_start;
+			pointer prev_end = this->_end;
+			size_type prev_size = this->capacity();
+			this->_start = this->_alloc.allocate(n);
+			this->_end = this->_start;
+			this->_end_capacity = this->_start + n;
+		}
 
 	const_reference at(size_type n) const
 	{
@@ -92,6 +110,7 @@ class vector {
 		value_type  *_data;
 		pointer   _start;
 		pointer   _end;
+		pointer  _end_capacity;
 		Alloc _alloc;
 	protected:
 	
