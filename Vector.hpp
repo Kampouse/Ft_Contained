@@ -18,9 +18,9 @@ public:
   typedef typename allocator_type::size_type size_type;
   typedef typename allocator_type::difference_type difference_type;
   // iterator  traits
-  typedef Ft::random_iterator<Ft::random_access_iterator_tag, value_type>
+  typedef Ft::random_iterator<Ft::random_access_iterator_tag, value_type >
       iterator;
-  typedef Ft::random_iterator<Ft::random_access_iterator_tag, value_type>
+  typedef Ft::random_iterator<Ft::random_access_iterator_tag, value_type >
       const_iterator;
   vector(const vector &other);
   size_t capacity(void) { return (this->_capacity); }
@@ -32,7 +32,8 @@ public:
       this->_alloc.destroy(--this->_end_capacity);
   }
   vector &operator=(const vector &other);
-  size_type size() const { return this->_end - this->start; }
+
+  size_type size() const { return this->_end - this->_start; }
   size_type max_size() const { return this->_alloc.max_size(); }
 iterator insert(iterator position, const value_type &val) 
 
@@ -78,9 +79,12 @@ iterator insert(iterator position, const value_type &val)
 			}
 		}
 	else
+		{
 		this->insert();
 		(void)val;
 
+
+		}
 }
   size_t capacity() const;
   bool empty() const;
@@ -113,28 +117,34 @@ iterator insert(iterator position, const value_type &val)
     return *(_start + n);
   }
   void push_back(const value_type &value) 
+{
+	if(_end == _end_capacity)
 	{
-		(void)value; 		
-
-
+		int next_capacity = (this->size() > 0) ? (int)(this->size() * 2) : 1;
+		this->reserve(next_capacity);
 	}
-  void reserve(size_type n) {
+	_alloc.construct(_end, value);
+	_end++;
+}
+  void reserve(size_type n)
+	{
     if (n > this->max_size())
       throw std::length_error("length error");
     if (this->capacity() >= n)
       return;
-    pointer prev_start = this->_start;
-    pointer prev_end = this->_end;
-    size_type prev_size = this->capacity();
-    this->_start = this->_alloc.allocate(n);
-    this->_end = this->_start;
-    this->_end_capacity = this->_start + n;
-    for (pointer i = prev_start; i != prev_end; i++)
-      this->_alloc.construct(this->_end++, *i);
-    for (size_type len = prev_end - prev_start; len > 0; len--)
-      this->_alloc.destroy(prev_start++);
-    this->_alloc.deallocate(prev_start, prev_size);
-  }
+	  	pointer new_container = _alloc.allocate(n);
+		pointer new_end = new_container;
+		pointer first = _start;
+		while(_start != _end)
+		{
+			_alloc.construct(new_end++, *_start);
+			_alloc.destroy(_start++);
+		}
+		_alloc.deallocate(first, this->size());
+		_start = new_container;
+		_end = new_end;
+		_end_capacity = _start + n;
+	}
 
   const_reference at(size_type n) const {
     if (n >= _size) {
@@ -148,6 +158,15 @@ iterator insert(iterator position, const value_type &val)
     this->_alloc.deallocate(this->_start, this->capacity());
   }
 
+	 void print_vector()
+	{
+	iterator it = _start;
+		while(it != end())
+		{
+			std::cout << *it << " " << std::endl;
+			++it;
+		}
+	}
 private:
   size_t _size;
   size_t _capacity;
