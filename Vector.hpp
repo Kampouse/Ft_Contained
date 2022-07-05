@@ -94,7 +94,8 @@ iterator insert(iterator position, const value_type &val)
   }
 
   reference operator[](size_type n) { return *(_start + n); }
-
+  reference front () { return *_start; }
+  reference back() { return *(_end - 1);}
   const_reference operator[](size_type n) const { return *(_start + n); }
 
   reference at(size_type n) {
