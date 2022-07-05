@@ -131,7 +131,10 @@ iterator insert(iterator position, const value_type &val)
 		_alloc.deallocate(first, this->size());
 		_start = new_container;
 		_end = new_end;
-		_end_capacity = _start + n;
+		_end_capacity = new_container + n;
+
+		_capacity = n;
+
 	}
 
   const_reference at(size_type n) const {

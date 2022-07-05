@@ -18,9 +18,9 @@ int main(void)
  test.size();
  test.max_size();
  test.empty();
-
  test.capacity();
- test.reserve(200);
+test.reserve(100);
+test.compare();
 
 /*
 int main(void)

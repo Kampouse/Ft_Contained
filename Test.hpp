@@ -3,16 +3,51 @@
 #include  <iostream>
 #include "assert.h" 
 #include  "Vector.hpp"
-
+#define  LOCATION   std::string(  std::string(__FILE__) + " Line: " +   std::to_string(__LINE__ ))  
 template<class T>
 
 class Test
 {
     public:
     Ft::vector 	<T> mine;
-
-
 	std::vector <T> real;
+	std::vector<std::string> error;
+	int asserted(bool status,std::string  message  )
+	{
+		if (status)
+		{
+			std::cout << "PASS: " << " " << message << std::endl;
+			return (status); 
+		}
+		else
+		{
+			std::cout << "Fail: " << " " << message << std::endl;
+			error.push_back(message);
+			return (status);
+		}
+	}
+	int compare(void) 
+	{
+			typename std::vector<T>::iterator iter_real = real.begin();
+			typename Ft::vector<T>::iterator  iter = mine.begin();
+			 int status = 1; 
+			std::cout << "<<---compare()---->>" << std::endl; 
+			while (iter != mine.end() && iter_real != real.end())
+			{
+				if (*iter != *iter_real)
+				{
+					std::cout << "Fail: " << " " << "self_compare" << std::endl;
+					error.push_back("self_compare");
+					status = 0;
+					break;
+				}
+				iter++;
+				iter_real++;
+			}
+			asserted (status, LOCATION );
+			return (1);
+	}
+
 	void push_back( T args)
 	{
 		mine.push_back(args);
@@ -22,45 +57,55 @@ class Test
 	}
 	void size(void)
 	{
-		std::cout << "size()" << std::endl;  
-		std::cout << "mine size:-> " << mine.size() << std::endl;
-		std::cout << "real size:-> " << real.size() << std::endl;
-		assert(mine.size() == real.size());
+		std::cout << "<<---size()---->>" << std::endl; 
+		if(asserted(mine.size() == real.size(),LOCATION ) == 0)
+			{
+				std::cout << "real size:-> " << real.empty() << std::endl;
+				std::cout << "mine size:-> " << mine.empty() << std::endl;
+			}
 	}
 	void max_size(void)
 	{
-		std::cout << "mine max_size: " << std::endl;
-		std::cout << "mine size:-> " << mine.max_size() << std::endl;
-		std::cout << "real size:-> " << real.max_size() << std::endl;
-		assert(mine.max_size() == real.max_size());
+		std::cout << "<<---max_size()---->>" << std::endl; 
+		if(asserted(mine.max_size() == real.max_size(),LOCATION ) == 0)
+			{
+				std::cout << "real size:-> " << real.empty() << std::endl;
+				std::cout << "mine size:-> " << mine.empty() << std::endl;
+			}
+
 	}
 	void empty(void)
 	{
-		std::cout << "empty()" << std::endl;
-		std::cout << "mine size:-> " << mine.empty() << std::endl;
-		std::cout << "real size:-> " << real.empty() << std::endl;
-		assert(mine.empty() == real.empty());
+		std::cout << "<<---empty()---->>" << std::endl; 
+		if(asserted(mine.empty() == real.empty (),LOCATION ) == 0)
+			{
+				std::cout << "real size:-> " << real.empty() << std::endl;
+				std::cout << "mine size:-> " << mine.empty() << std::endl;
+			}
 	}
 	void capacity(void)
 	{
-		std::cout << "capacity()" << std::endl;
-		std::cout << "mine size:-> " << mine.capacity() << std::endl;
-		std::cout << "real size:-> " << real.capacity() << std::endl;
-		assert(mine.capacity() == real.capacity());
+		std::cout << "<<---capacity()---->>" << std::endl; 
+		if(asserted(mine.capacity() == real.capacity(),LOCATION ) == 0)
+		{
+			std::cout << "real size:-> " << real.capacity() << std::endl;
+			std::cout << "mine size:-> " << mine.capacity() << std::endl;
+		}
 
 	}
 	void reserve(std::size_t n  )
 		{
-			std::cout << "reserve()" << std::endl;
+			std::cout << "<<---reserve()---->>" << std::endl; 
 			mine.reserve(n);
 			real.reserve(n);
-			std::cout << "real size:-> " << real.capacity() << std::endl;
-			std::cout << "mine size:-> " << mine.capacity() << std::endl;
-			 assert(mine.capacity() == real.capacity ());
+			if(asserted( mine.capacity() == real.capacity (),LOCATION ) == 0)
+			{
+				std::cout << "real size:-> " << real.capacity() << std::endl;
+				std::cout << "mine size:-> " << mine.capacity() << std::endl;
 
-
-
+			}
 		}
+
 };
 
 template<typename T>
@@ -78,10 +123,10 @@ std::ostream &operator<<(std::ostream &os, Test<T> &test)
 	{
 		os << " "  << *it << " ";
 	}
+
 	os << std::endl;
 	
-
-	return os;
+	return (os);
 }
 
 #endif
