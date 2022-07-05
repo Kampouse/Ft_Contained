@@ -1,6 +1,6 @@
 NAME = container 
 NAME_TEST = container_test
-FLAGS = -Wall -Wextra -Werror --std=c++98 -g -DHEADER=Ft
+FLAGS = -Wall -Wextra -Werror --std=c++11 -g -DHEADER=Ft
 FLAGS_test = -Wall -Wextra -Werror --std=c++98 -g -DHEADER=std
 
 SRCS = main.cpp 

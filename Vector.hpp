@@ -34,6 +34,7 @@ public:
   vector &operator=(const vector &other);
 
   size_type size() const { return this->_end - this->_start; }
+ bool empty() const {return size() == 0 ? true:false;}
   size_type max_size() const { return this->_alloc.max_size(); }
 iterator insert(iterator position, const value_type &val) 
 {
@@ -75,8 +76,6 @@ iterator insert(iterator position, const value_type &val)
 		}
 }
   size_t capacity() const;
-  bool empty() const;
-
   // allocator_type mean  come from Alloc  Typdef
   explicit vector(const allocator_type &allocator = allocator_type())
       : _size(0), _capacity(0), _data(NULL), _start(NULL), _end(NULL),

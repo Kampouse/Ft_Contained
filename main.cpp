@@ -15,6 +15,13 @@ int main(void)
  test.push_back(1);
  test.push_back(1);
  test.push_back(1);
+ test.size();
+ test.max_size();
+ test.empty();
+
+ test.capacity();
+ test.reserve(200);
+
 /*
 int main(void)
 {
