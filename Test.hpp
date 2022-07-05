@@ -106,6 +106,27 @@ class Test
 			}
 		}
 
+	void front(void)
+		{
+
+			std::cout << "<<---front()---->>" << std::endl; 
+			if(asserted( mine.front() == real.front(),LOCATION ) == 0)
+			{
+				std::cout << "front():-> " << mine.front() << std::endl;
+				std::cout << "real front():-> " << real.front() << std::endl;
+
+			}
+		}
+
+	void back(void)
+		{
+			std::cout << "<<---back()---->>" << std::endl; 
+			if(asserted( mine.back() == real.back(),LOCATION ) == 0)
+			{
+				std::cout << "back():-> " << mine.front() << std::endl;
+				std::cout << "real back():-> " << real.front() << std::endl;
+			}
+		} 
 };
 
 template<typename T>
