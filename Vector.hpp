@@ -27,15 +27,17 @@ public:
   iterator begin() { return iterator(this->_start); }
   // should ths return the end of capacity
   iterator end() { return iterator(this->_end); }
-  void clear() {
-    while (this->_start != this->_end_capacity)
-      this->_alloc.destroy(--this->_end_capacity);
-  }
+  
   vector &operator=(const vector &other);
 
   size_type size() const { return this->_end - this->_start; }
  bool empty() const {return size() == 0 ? true:false;}
   size_type max_size() const { return this->_alloc.max_size(); }
+
+void clear() {
+    while (this->_start != this->_end)
+      this->_alloc.destroy(--this->_end);
+  }
 iterator insert(iterator position, const value_type &val) 
 {
 	(void)val;
@@ -50,9 +52,39 @@ iterator insert(iterator position, const value_type &val)
 			this->_alloc.construct(_end, *position);
 		}
 }
+iterator  erase(iterator begin) 
+{
+	std::cout << " erase() " << std::endl;
+	pointer  pos = &(*begin);
+	_alloc.destroy(pos);
+	if( &(*begin) + 1 == _end)
+			_alloc.destroy( &(*begin) + 1);
+	else
+	{
+		for (int i = 0; i < _end - &(*begin) - 1; i++)
+		{
+			_alloc.construct(&(*begin) + i, *(&(*begin) + i + 1));
+			_alloc.destroy(&(*begin) + i + 1);
+		}
+		_end -=1;
+	}
+	return iterator(pos);
+}
+iterator  erase(iterator begin,iterator end ) 
+{
+	pointer  pos = &(*begin); 
+	for (int i = 0; i <  &(*end) - &(*begin); i++)
+		_alloc.destroy(&(*begin) + i);
+	for (int i = 0; i < _end - &(*end) - 1; i++)
+		{
+			_alloc.construct(&(*begin) + i, *(&(*begin) + i + 1));
+			_alloc.destroy(&(*begin) + i + 1);
+		}
+	_end -= &(*end) - &(*begin);
+	return iterator(pos);
+}
 
   size_t capacity() const;
-  // allocator_type mean  come from Alloc  Typdef
   explicit vector(const allocator_type &allocator = allocator_type())
       : _size(0), _capacity(0), _data(NULL), _start(NULL), _end(NULL),
         _end_capacity(NULL), _alloc(allocator) {}
@@ -68,18 +100,32 @@ iterator insert(iterator position, const value_type &val)
     }
 
   }
-
+	void pop_back(void)
+	{
+		_alloc.destroy(&this->back());
+		this->_end--;
+	}
   reference operator[](size_type n) { return *(_start + n); }
   reference front () { return *_start; }
+  value_type* data() { return _start; };
+  value_type* data() const { return _start; };
   reference back() { return *(_end - 1);}
   const_reference operator[](size_type n) const { return *(_start + n); }
 
   reference at(size_type n) {
-    if (n >= _size) {
+    if (n >= size() ) {
       throw std::out_of_range("out of range");
     }
     return *(_start + n);
   }
+  const_reference at(size_type n) const {
+	if (n >= size() ) {
+      throw std::out_of_range("out of range");
+    }
+    return *(_start + n);
+  }
+
+
   void push_back(const value_type &value) 
 {
 	if(_end == _end_capacity)
@@ -90,6 +136,7 @@ iterator insert(iterator position, const value_type &val)
 	}
 	_alloc.construct(_end, value);
 	_end++;
+	_size = this->size();
 }
   void reserve(size_type n)
 	{
@@ -109,20 +156,12 @@ iterator insert(iterator position, const value_type &val)
 		_start = new_container;
 		_end = new_end;
 		_end_capacity = new_container + n;
-
 		_capacity = n;
-
+		_size = this->size();
 	}
 
-  const_reference at(size_type n) const {
-    if (n >= _size) {
-      throw std::out_of_range("out of range");
-    }
-    return *(_start + n);
-  }
-
   ~vector() {
-    this->clear();
+    this->clearing();
     this->_alloc.deallocate(this->_start, this->capacity());
   }
 
@@ -173,16 +212,15 @@ iterator insert(iterator position, const value_type &val)
 						_end++;
 					}
 				}
-
-
-
 	 }
 
 	  allocator_type get_allocator() const { return _alloc; }
 
+	void assign( size_type count, const value_type& value )
+	{
 
 
-
+	}
 	 void print_vector()
 	{
 	iterator it = _start;
@@ -200,6 +238,12 @@ private:
   pointer _end;
   pointer _end_capacity;
   Alloc _alloc;
+
+void clearing() {
+    while (this->_start != this->_end_capacity)
+      this->_alloc.destroy(--this->_end_capacity);
+  }
+
 
 protected:
 };

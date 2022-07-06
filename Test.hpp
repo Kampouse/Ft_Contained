@@ -26,6 +26,7 @@ class Test
 			return (status);
 		}
 	}
+
 	int compare(void) 
 	{
 			typename std::vector<T>::iterator iter_real = real.begin();
@@ -55,6 +56,35 @@ class Test
 		std::cout << *this;
 		std::cout << "<< -- add_back()-->>" << std::endl; 
 	}
+
+	void pop_back(void)
+	{
+		std::cout << "<< -- pop_back()-->>" << std::endl; 
+		mine.pop_back();
+		real.pop_back();
+		compare ();
+		std::cout << *this;
+		std::cout << "<< -- pop_back()-->>" << std::endl; 
+	}
+
+	void  erase(size_t pos)
+	{
+		std::cout << "<< -- erase()-->>" << std::endl; 
+		mine.erase(mine.begin() + pos);
+		real.erase(real.begin() + pos);
+		compare();
+		std::cout << *this;
+	}
+
+	void  erase(size_t pos,size_t end)
+	{
+		std::cout << "<< -- erase()-->>" << std::endl; 
+		mine.erase(mine.begin() + pos , mine.begin() + end);
+		real.erase(real.begin() + pos, real.begin() + end);
+		compare();
+		std::cout << *this;
+	}
+
 	void size(void)
 	{
 		std::cout << "<<---size()---->>" << std::endl; 
@@ -64,6 +94,7 @@ class Test
 				std::cout << "mine size:-> " << mine.empty() << std::endl;
 			}
 	}
+
 	void max_size(void)
 	{
 		std::cout << "<<---max_size()---->>" << std::endl; 
@@ -74,6 +105,7 @@ class Test
 			}
 
 	}
+
 	void empty(void)
 	{
 		std::cout << "<<---empty()---->>" << std::endl; 
@@ -83,6 +115,7 @@ class Test
 				std::cout << "mine size:-> " << mine.empty() << std::endl;
 			}
 	}
+
 	void capacity(void)
 	{
 		std::cout << "<<---capacity()---->>" << std::endl; 
@@ -93,6 +126,7 @@ class Test
 		}
 
 	}
+
 	void reserve(std::size_t n  )
 		{
 			std::cout << "<<---reserve()---->>" << std::endl; 
@@ -127,6 +161,7 @@ class Test
 				std::cout << "real back():-> " << real.front() << std::endl;
 			}
 		} 
+
 	void resize(size_t n)
 		{
 			std::cout  << "<<---resize()---->>" << std::endl;
@@ -138,6 +173,7 @@ class Test
 				std::cout << "mine size:-> " << mine.size() << std::endl;
 			}
 		}
+
 	void resize(size_t n,T value)
 		{
 			std::cout  << "<<---resize()---->>" << std::endl;
@@ -154,6 +190,56 @@ class Test
 			}
 			
 		}
+
+  void operator[](size_t  n)
+	{	
+
+		std::cout << "<<---operator[]---->>" << std::endl; 
+		if(asserted(mine[n] == real[n],LOCATION ) == 0)
+		{
+			std::cout << "real size:-> " << real[n] << std::endl;
+			std::cout << "mine size:-> " << mine[n] << std::endl;
+		}
+	}
+	void at(size_t n)
+	{
+		std::cout << "<<---at()---->>" << std::endl; 
+		if(asserted(mine.at(n) == real.at(n),LOCATION ) == 0)
+		{
+			std::cout << "real size:-> " << real.at(n) << std::endl;
+			std::cout << "mine size:-> " << mine.at(n) << std::endl;
+		}
+	}
+	void data()
+	{
+		std::cout << "<<---data()---->>" << std::endl; 
+		if(asserted( *(mine.data()) == *(real.data()),LOCATION ) == 0)
+		{
+			std::cout << "real size:-> " << real.data() << std::endl;
+			std::cout << "mine size:-> " << mine.data() << std::endl;
+		}
+	}
+	void clear()
+{
+
+std::cout << "<<---clear()---->>" << std::endl; 
+			mine.clear();
+			real.clear();
+		if(asserted( mine.size() == real.size() ,LOCATION ) == 0)
+		{
+			std::cout << "real size:-> " << real.size() << std::endl;
+			std::cout << "mine size:-> " << mine.size() << std::endl;
+		}
+}
+ void assign(void)
+{
+	mine.assign(10,'a');
+	real.assign(10,'a');
+
+}
+
+
+
 };
 
 template<typename T>
@@ -171,9 +257,7 @@ std::ostream &operator<<(std::ostream &os, Test<T> &test)
 	{
 		os << " "  << *it << " ";
 	}
-
 	os << std::endl;
-	
 	return (os);
 }
 
