@@ -26,7 +26,6 @@ public:
 };
 template <class T> class iterator_traits<T *> {};
 template <class T> class iterator_traits<const T *> {};
-
 // iterator class
 template <class Category, class T, class Distance = ptrdiff_t, class Pointer = T *, class Reference = T &>
 class random_iterator {

@@ -51,30 +51,6 @@ iterator insert(iterator position, const value_type &val)
 		}
 }
 
-  void resize(size_t n , size_type val = value_type())
-{
-	pointer new_container = _alloc.allocate(size());
-	pointer new_end = new_container;
-	if(n > this->max_size())
-		{
-			throw (std::length_error("too long"));
-		}
-	else if (n < this->size())
-		{
-			while(this->size() > n)
-			{
-					--_end; 
-					_alloc.destroy(_end);
-			}
-		}
-	else
-		{
-		this->insert();
-		(void)val;
-
-
-		}
-}
   size_t capacity() const;
   // allocator_type mean  come from Alloc  Typdef
   explicit vector(const allocator_type &allocator = allocator_type())
@@ -149,6 +125,63 @@ iterator insert(iterator position, const value_type &val)
     this->clear();
     this->_alloc.deallocate(this->_start, this->capacity());
   }
+
+	 void resize(size_t n) 
+	{
+		if(n > this->max_size())
+		{
+			throw (std::length_error("too long"));
+		}
+		else if (n < this->size())
+		{
+			while(this->size() > n)
+			{
+					--_end; 
+					_alloc.destroy(_end);
+			}
+		}
+		else
+		{
+			while(this->size() < n)
+			{
+				 _alloc.construct(_end);
+				_end++;
+
+			}
+		}		
+	}
+
+	 void resize(size_t n, const value_type &val)
+	 {
+		if(n > this->max_size())
+				{
+					throw (std::length_error("too long"));
+				}
+				else if (n < this->size())
+				{
+					while(this->size() > n)
+					{
+							--_end; 
+							_alloc.destroy(_end);
+					}
+				}
+				else
+				{
+					while(this->size() < n)
+					{
+						_alloc.construct(_end,val);
+						_end++;
+					}
+				}
+
+
+
+	 }
+
+	  allocator_type get_allocator() const { return _alloc; }
+
+
+
 
 	 void print_vector()
 	{

@@ -127,6 +127,33 @@ class Test
 				std::cout << "real back():-> " << real.front() << std::endl;
 			}
 		} 
+	void resize(size_t n)
+		{
+			std::cout  << "<<---resize()---->>" << std::endl;
+			real.resize(n);
+			mine.resize(n);
+			if(asserted(mine.size() == real.size(), LOCATION ) == 0)
+			{
+				std::cout << "real size:-> " << real.size() << std::endl;
+				std::cout << "mine size:-> " << mine.size() << std::endl;
+			}
+		}
+	void resize(size_t n,T value)
+		{
+			std::cout  << "<<---resize()---->>" << std::endl;
+			real.resize(n,value);
+			mine.resize(n,value);
+			if(asserted(mine.size() == real.size(), LOCATION ) == 0 || compare() == 0)
+			{
+				std::cout << "real size:-> " << real.size() << std::endl;
+				std::cout << "mine size:-> " << mine.size() << std::endl;
+				std::cout << "real size:-> " << real.size() << std::endl;
+				std::cout << "mine size:-> " << mine.size() << std::endl;
+				std::cout << "real capacity:-> " << real.capacity() << std::endl;
+				std::cout << "mine capacity:-> " << mine.capacity() << std::endl;
+			}
+			
+		}
 };
 
 template<typename T>

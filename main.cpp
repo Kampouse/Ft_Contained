@@ -23,6 +23,10 @@ int main(void)
  test.compare();
  test.front();
  test.back();
+test.resize(100);
+test.resize(3);
+test.resize(0);
+test.resize(100,25);
 
 /*
 int main(void)
