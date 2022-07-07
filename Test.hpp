@@ -85,6 +85,15 @@ class Test
 		std::cout << *this;
 	}
 
+	void  insert(size_t pos, T args)
+	{
+		std::cout << "<< -- insert()-->>" << std::endl; 
+		mine.insert(mine.begin() + pos, args);
+		real.insert(real.begin() + pos, args);
+		compare();
+		std::cout << *this;
+	}
+
 	void size(void)
 	{
 		std::cout << "<<---size()---->>" << std::endl; 

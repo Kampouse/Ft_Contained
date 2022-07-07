@@ -15,25 +15,9 @@ int main(void)
  test.push_back(1);
  test.push_back(1);
  test.push_back(1);
- test.pop_back();
- test[5];
- test.at(2);
- test.erase(2,5);
- test.data();
- test.size();
- test.max_size();
- test.empty();
- test.capacity();
- test.reserve(100);
- test.compare();
- test.front();
- test.back();
-test.resize(100);
-test.resize(3);
-test.resize(0);
-test.resize(100,25);
- test.clear();
+ test.insert(2, 2);
 
+ test.pop_back();
 /*
 int main(void)
 {

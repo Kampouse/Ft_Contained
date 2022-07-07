@@ -38,20 +38,66 @@ void clear() {
     while (this->_start != this->_end)
       this->_alloc.destroy(--this->_end);
   }
-iterator insert(iterator position, const value_type &val) 
-{
-	(void)val;
 
+iterator insert(iterator   position, const value_type &val) 
+{
 	size_type pos = &(*position) - _start;
-	if(size_type(_end - _start)  >= this->size() + 1 )
+
+	if(size_type(_end_capacity - _end ) >= this->size() + 1) 
 		{
-			for (size_type i = _end - _start - 1; i >= pos; i--)
-			{
-						_alloc.construct(_end + 1, _start[i]);
-			}
-			this->_alloc.construct(_end, *position);
+			
+		for(size_type i = 0; i  < pos;i++)
+				_alloc.construct(_end - i,*_end - i  - i);
+			_end++;	
+			_alloc.construct(&(*position),val);
 		}
+	else
+	{
+		pointer new_start = pointer();;
+		pointer new_end = pointer();;
+		pointer new_end_capcity = pointer();;
+		int next_capacity = (this->size() * 2 > 0) ? this->size() * 2 : 1; 
+		new_start = _alloc.allocate(next_capacity); 
+		new_end = new_start + this->size() + 1;
+		new_end_capcity  = new_start + this->size();
+
+
+	for (size_type i = 0; i < pos; i++)
+		{
+			_alloc.construct(new_start + i, *(_start + i));
+			_alloc.destroy(_start + i);
+		}
+		_alloc.construct(new_start + pos, val);
+	for (size_type j = 0; j < this->size() - pos; j++)
+		{
+
+			_alloc.construct(new_end - j - 1, *(_end - j - 1));
+			_alloc.destroy(_end - j - 1);
+		}
+		if(_start != nullptr)
+			_alloc.deallocate(_start, _end_capacity - _start); 
+		_start = new_start;
+		_end = new_end;
+		_end_capacity = new_end_capcity;
+	}
+	return iterator(_start + pos); 	
 }
+
+iterator  insert(const_iterator  position , size_type n,  const value_type&val)
+	{
+
+		(void)position;
+		(void)n;
+		(void)val;
+
+
+
+
+
+	}
+
+	
+
 iterator  erase(iterator begin) 
 {
 	std::cout << " erase() " << std::endl;
@@ -218,7 +264,8 @@ iterator  erase(iterator begin,iterator end )
 
 	void assign( size_type count, const value_type& value )
 	{
-
+   (void)value; 
+   (void)count; 
 
 	}
 	 void print_vector()
