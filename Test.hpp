@@ -144,8 +144,7 @@ class Test
 			if(asserted( mine.capacity() == real.capacity (),LOCATION ) == 0)
 			{
 				std::cout << "real size:-> " << real.capacity() << std::endl;
-				std::cout << "mine size:-> " << mine.capacity() << std::endl;
-
+			std::cout << "mine size:-> " << mine.capacity() << std::endl;
 			}
 		}
 

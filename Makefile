@@ -29,7 +29,7 @@ val: all
 clean:
 	    ${RM} ${OBJS}	
 git:
-		@git add ${SRCS} Makefile Vector.hpp Iterator.hpp Test.hpp
+		@git add ${SRCS} Makefile Vector.hpp Iterator.hpp Test.hpp tools.hpp
 
 fclean: clean
 	@${RM} ${NAME}
