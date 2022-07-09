@@ -1,11 +1,13 @@
 #include <iostream> 
 #include <vector> 
 #include "./Vector.hpp"
+#include "./util.h"
 #include "Test.hpp"
 
 int main(void)
 {
  Test<int>test;
+
  test.push_back(1);
  test.push_back(1);
  test.push_back(1);
@@ -18,6 +20,16 @@ int main(void)
  test.insert(2, 2);
 
  test.pop_back();
+
+
+
+
+
+
+
+
+
+
 /*
 int main(void)
 {

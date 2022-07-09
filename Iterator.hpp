@@ -9,10 +9,71 @@ namespace Ft {
 
 // iterator tag  trait
 //
-struct random_access_iterator_tag {};
-struct forward_iterator_tag {};
-struct bidirectional_iterator_tag {};
-struct input_iterator_tag {};
+class random_access_iterator_tag {};
+class forward_iterator_tag {};
+class bidirectional_iterator_tag {};
+class output_iterator_tag {};
+class input_iterator_tag {};
+
+
+template <bool is_valid, typename T>
+	struct valid_iterator_tag_res { typedef  T type;const static  bool value = is_valid;};
+	
+
+template <typename T>
+	struct is_input_interator_tagged : public valid_iterator_tag_res< false , T>{ }; 
+
+template <>
+	struct is_input_interator_tagged<Ft::random_access_iterator_tag> :
+		public valid_iterator_tag_res<true , Ft::random_access_iterator_tag >{ }; 
+
+template <>
+	struct is_input_interator_tagged<Ft::bidirectional_iterator_tag> :
+		public valid_iterator_tag_res<true , Ft::bidirectional_iterator_tag >{ }; 
+
+template <>
+	struct is_input_interator_tagged<Ft::forward_iterator_tag> :
+		public valid_iterator_tag_res<true , Ft::forward_iterator_tag>{ }; 
+
+template <>
+	struct is_input_interator_tagged<Ft::output_iterator_tag> :
+		public valid_iterator_tag_res<true , Ft::output_iterator_tag>{ };
+
+template <>
+	struct is_input_interator_tagged<Ft::input_iterator_tag> :
+		public valid_iterator_tag_res<true , Ft::input_iterator_tag>{ };
+
+
+
+
+
+// iterator validation if its a ft one or not 
+ template <typename T>
+	struct  is_ft_iterator_tagged_res: public valid_iterator_tag_res< false , T>{ };
+
+ template <>
+	struct is_ft_iterator_tagged_res<Ft::random_access_iterator_tag> :
+		public valid_iterator_tag_res<true , Ft::random_access_iterator_tag >{ };
+
+	 template <>
+	struct is_ft_iterator_tagged_res<Ft::bidirectional_iterator_tag> :
+		public valid_iterator_tag_res<true , Ft::bidirectional_iterator_tag >{ };
+	
+	 template <>
+	struct is_ft_iterator_tagged_res<Ft::forward_iterator_tag> :
+		public valid_iterator_tag_res<true , Ft::forward_iterator_tag>{ };
+	
+	 template <>
+	struct is_ft_iterator_tagged_res<Ft::output_iterator_tag> :
+		public valid_iterator_tag_res<true , Ft::output_iterator_tag>{ };
+	
+	 template <>
+	struct is_ft_iterator_tagged_res<Ft::input_iterator_tag> :
+		public valid_iterator_tag_res<true , Ft::input_iterator_tag>{ };
+
+
+
+
 
 template <class Iterator>
 class iterator_traits {
