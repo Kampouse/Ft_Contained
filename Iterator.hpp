@@ -72,9 +72,6 @@ template <>
 		public valid_iterator_tag_res<true , Ft::input_iterator_tag>{ };
 
 
-
-
-
 template <class Iterator>
 class iterator_traits {
 public:
@@ -85,9 +82,56 @@ public:
   typedef typename Iterator::reference reference;
   typedef typename Ft::random_access_iterator_tag  iterator_category;
 };
-template <class T> class iterator_traits<T *> {};
-template <class T> class iterator_traits<const T *> {};
-// iterator class
+
+
+
+
+
+
+
+template <class T> class iterator_traits<T *> {
+
+  public:
+	typedef T value_type;
+	typedef std::ptrdiff_t difference_type;
+	typedef T *pointer;
+	typedef T &reference;
+	typedef Ft::random_access_iterator_tag iterator_category;
+};
+
+template <class Category, class T, class Distance = ptrdiff_t, class Pointer = T *, class Reference = T&>
+class iterator {
+  public:
+	typedef Category iterator_category;
+	typedef T value_type;
+	typedef Distance difference_type;
+	typedef Pointer pointer;
+	typedef Reference reference;
+};
+
+template <class T> 
+class bidirectional_iterator  :	iterator<Ft::bidirectional_iterator_tag, T>  
+{
+typedef typename iterator<Ft::bidirectional_iterator_tag, T>::iterator_category iterator_category;
+	typedef typename iterator<Ft::bidirectional_iterator_tag, T>::value_type value_type;
+	typedef typename iterator<Ft::bidirectional_iterator_tag, T>::difference_type difference_type;
+	typedef typename iterator<Ft::bidirectional_iterator_tag, T>::pointer pointer;
+	typedef typename iterator<Ft::bidirectional_iterator_tag, T>::reference reference;
+	private: 
+			pointer ptr;
+};
+
+template <class T> class iterator_traits<const T *> {
+  public:
+	typedef T value_type;
+	typedef std::ptrdiff_t difference_type;
+	typedef const T *pointer;
+	typedef const T &reference;
+	typedef Ft::random_access_iterator_tag iterator_category;
+};
+
+
+ 
 template <class Category, class T, class Distance = ptrdiff_t, class Pointer = T *, class Reference = T &>
 class random_iterator {
 public:

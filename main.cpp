@@ -1,7 +1,7 @@
 #include <iostream> 
 #include <vector> 
 #include "./Vector.hpp"
-#include "./util.h"
+#include "./tools.hpp"
 #include "Test.hpp"
 
 int main(void)

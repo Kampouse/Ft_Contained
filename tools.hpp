@@ -3,17 +3,6 @@
 #include <iostream>
 
 
-static class  nullptr_t {
-public:
-	template<typename T>
-	operator T*() const {return nullptr;}
-template<class C, class T >
-	operator T C::*() const { return nullptr;}
-
-private:
-void operator&() const;
-} u_nullptr{};
-
 namespace  Ft {
 
 	template  <bool Cond , typename T = void> struct enable_if {};
@@ -80,3 +69,4 @@ namespace  Ft {
 			struct is_integral  : public is_integral_type<T> {};
 
 }
+#endif // TOOLS_HPP
