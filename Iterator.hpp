@@ -85,10 +85,6 @@ public:
 
 
 
-
-
-
-
 template <class T> class iterator_traits<T *> {
 
   public:
@@ -98,6 +94,20 @@ template <class T> class iterator_traits<T *> {
 	typedef T &reference;
 	typedef Ft::random_access_iterator_tag iterator_category;
 };
+
+
+
+template <class InputIterator>
+	typename iterator_traits<InputIterator>::difference_type
+	distance(InputIterator first, InputIterator last) {
+		typedef typename iterator_traits<InputIterator>::difference_type difference_type;
+		difference_type n = 0;
+		while (first != last) {
+			++first;
+			++n;
+		}
+		return n;
+	}
 
 template <class Category, class T, class Distance = ptrdiff_t, class Pointer = T *, class Reference = T&>
 class iterator {
@@ -121,6 +131,7 @@ typedef typename iterator<Ft::bidirectional_iterator_tag, T>::iterator_category 
 			pointer ptr;
 };
 
+
 template <class T> class iterator_traits<const T *> {
   public:
 	typedef T value_type;
@@ -131,7 +142,6 @@ template <class T> class iterator_traits<const T *> {
 };
 
 
- 
 template <class Category, class T, class Distance = ptrdiff_t, class Pointer = T *, class Reference = T &>
 class random_iterator {
 public:
